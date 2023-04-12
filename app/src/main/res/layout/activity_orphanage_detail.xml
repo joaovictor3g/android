@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <ImageView
+        android:id="@+id/orphanage_image"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/orphanage_image"
+        android:clipToOutline="true"
+        />
+
+    <TextView
+        android:id="@+id/orphanage_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Orf. Esperança"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/orphanage_image"
+        android:textColor="@color/label_text"
+        android:textSize="24dp"
+        android:lineHeight="34px"
+        android:textFontWeight="@integer/material_motion_duration_short_2"
+        android:padding="16dp"
+        />
+
+    <TextView
+        android:id="@+id/orphangage_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Presta assistência a crianças de 06 a 15 anos que se encontre em situação de risco e/ou vulnerabilidade social."
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/orphanage_name"
+        android:paddingHorizontal="16dp"
+        />
+
+    <TextView
+        android:id="@+id/heading_visitation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/heading"
+        android:layout_marginTop="100dp"
+        android:textSize="24dp"
+        android:lineHeight="34px"
+        android:textFontWeight="@integer/material_motion_duration_short_2"
+        app:layout_constraintTop_toBottomOf="@+id/orphangage_description"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="Instruções para visitação"
+        android:padding="16dp"
+        />
+
+    <TextView
+        android:id="@+id/visit_instrutions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Venha como se sentir a vontade e traga muito amor e paciência para dar."
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/heading_visitation"
+        android:paddingHorizontal="16dp"
+        />
+
+    <Button
+        android:id="@+id/whatsapp_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/whatsapp_button"
+        android:backgroundTint="@color/green_whatsapp"
+        android:height="70dp"
+        android:layout_marginHorizontal="16dp"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
