@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.FirebaseException
@@ -13,6 +14,8 @@ import java.util.UUID
 
 class CreateOrphanageActivity: AppCompatActivity() {
     private lateinit var database: DatabaseReference
+    var latitude: Double? = 0.0
+    var longitude: Double? = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,14 +24,15 @@ class CreateOrphanageActivity: AppCompatActivity() {
 
         database = FirebaseDatabase.getInstance().reference
 
-        val extras = intent.extras
-        Toast.makeText(baseContext, "${extras?.getString("latitude")} ${extras?.getString("longitude")}", Toast.LENGTH_SHORT).show()
+        latitude = intent.getDoubleExtra("latitude", 0.0)
+        longitude = intent.getDoubleExtra("longitude", 0.0)
 
         val buttonNext: Button = findViewById(R.id.button_next)
         buttonNext.setOnClickListener {
             createNewOrphanage()
         }
-
+        val coordsTextView: TextView = findViewById(R.id.coords_text_view)
+        coordsTextView.text = "Você está com as seguintes coordenadas: lat:${latitude}, long${longitude}"
     }
 
     private fun createNewOrphanage() {
@@ -37,15 +41,14 @@ class CreateOrphanageActivity: AppCompatActivity() {
         val whatsapp: EditText = findViewById(R.id.edit_text_whatsapp)
         val visitInstructions: EditText = findViewById(R.id.edit_text_instructions)
         val visitTime: EditText = findViewById(R.id.edit_text_visit_time)
-        val latitude = intent.getDoubleExtra("latitude", 0.0)
-        val longitude = intent.getDoubleExtra("longitude", 0.0)
+
 
         val coords = Coords(latitude, longitude)
         val visit = Visit(visitInstructions.text.toString(), visitTime.text.toString())
-
-        val orphanage = Orphanage(name.text.toString(), about.text.toString(), whatsapp.text.toString(), visit, coords)
+        val id = UUID.randomUUID().toString()
+        val orphanage = Orphanage(id, name.text.toString(), about.text.toString(), whatsapp.text.toString(), visit, coords)
         try {
-            database.child("orphanages").child(UUID.randomUUID().toString()).setValue(orphanage)
+            database.child("orphanages").child(id).setValue(orphanage)
             Toast.makeText(this, "Orfanato criado com sucesso", Toast.LENGTH_SHORT).show()
             goToMap()
         } catch (exception: FirebaseException) {
@@ -61,7 +64,7 @@ class CreateOrphanageActivity: AppCompatActivity() {
     }
 
 
-    data class Orphanage(val name: String? = "", val about: String? = "", val whatsapp: String? = "", val visit: Visit? = Visit(), val coords: Coords? = Coords()) {
+    data class Orphanage(val id: String? = UUID.randomUUID().toString(), val name: String? = "", val about: String? = "", val whatsapp: String? = "", val visit: Visit? = Visit(), val coords: Coords? = Coords()) {
     }
 
     data class Visit(val instructions: String? = "", val time: String? = "") {}

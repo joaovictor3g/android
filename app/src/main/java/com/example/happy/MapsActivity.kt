@@ -7,7 +7,10 @@ import android.graphics.Canvas
 import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MotionEvent
+import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -17,6 +20,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.database.*
 
@@ -58,8 +62,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     mMap.addMarker(
                         MarkerOptions()
                             .position(LatLng(orphanage.coords?.latitude ?: 0.0 , orphanage.coords?.longitude ?: 0.0))
-                            .title(orphanage?.name)
-                            .icon(bitmapDescriptorFromVector(baseContext, R.drawable.happy_marker)),
+                            .title("${orphanage?.name}-${orphanage.id}")
+                            .icon(bitmapDescriptorFromVector(baseContext, R.drawable.happy_marker))
+
                     )
                     orphanagesList.add(orphanage)
                 }
@@ -68,6 +73,38 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
+            }
+        })
+
+        mMap.setInfoWindowAdapter (object: GoogleMap.InfoWindowAdapter {
+            override fun getInfoWindow(marker: Marker): View? {
+                return null
+            }
+
+            override fun getInfoContents(marker: Marker): View {
+                val view = layoutInflater.inflate(R.layout.custom_info_window, null, false)
+                val orphanageName = view.findViewById<TextView>(R.id.orphanage_name)
+                val title = marker.title.toString().split("-")
+                orphanageName.text = title[0]
+
+//                val button = findViewById<Button>(R.id.info_window_button)
+//                button?.bringToFront()
+//                button?.isFocusable = true
+//                button?.isFocusableInTouchMode = true
+//                button?.requestFocus()
+//                button?.setOnClickListener {
+//                    val intent = Intent(applicationContext, OrphanageDetailActivity::class.java)
+//                    intent.putExtra("orphanage_id", title[1])
+//                    startActivity(intent)
+//                }
+                view.setOnClickListener {
+                    val intent = Intent(baseContext, OrphanageDetailActivity::class.java)
+                    intent.putExtra("orphanage_id", title[1])
+                    startActivity(intent)
+                }
+
+
+                return view
             }
         })
     }
