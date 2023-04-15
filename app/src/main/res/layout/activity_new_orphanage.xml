@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:scrollbars="none"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:id="@+id/data_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dados"
+                android:textSize="24dp"
+                android:lineHeight="34px"
+                android:textFontWeight="@integer/material_motion_duration_short_2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:textColor="@color/heading"
+                />
+
+            <TextView
+                android:id="@+id/label_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/data_text_view"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="16dp"
+                android:text="Nome"
+                android:textColor="@color/label_text"
+
+                />
+
+            <EditText
+                android:id="@+id/edit_text_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_text_border"
+                android:padding="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/label_name"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/label_about"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/edit_text_name"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="16dp"
+                android:text="Sobre"
+                android:textColor="@color/label_text"
+
+                />
+
+            <TextView
+                android:id="@+id/label_max_characters"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/edit_text_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="16dp"
+                android:text="Máximo 300 caracteres"
+                android:textColor="@color/label_text"
+
+                />
+
+            <EditText
+                android:id="@+id/edit_text_about"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_text_border"
+                android:padding="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/label_about"
+                app:layout_constraintStart_toStartOf="parent"
+                android:minHeight="100dp"
+                />
+
+            <TextView
+                android:id="@+id/label_whatsapp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/edit_text_about"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="16dp"
+                android:text="Número do whatsapp"
+                android:textColor="@color/label_text"
+                />
+
+            <EditText
+                android:id="@+id/edit_text_whatsapp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_text_border"
+                android:padding="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/label_whatsapp"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+
+            <TextView
+                android:id="@+id/heading_visitation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/heading"
+                android:layout_marginTop="100dp"
+                android:textSize="24dp"
+                android:lineHeight="34px"
+                android:textFontWeight="@integer/material_motion_duration_short_2"
+                app:layout_constraintTop_toBottomOf="@+id/edit_text_whatsapp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="Visitação"
+                />
+
+            <TextView
+                android:id="@+id/label_instructions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/heading_visitation"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="16dp"
+                android:text="Instruções"
+                android:textColor="@color/label_text"
+                />
+
+            <EditText
+                android:id="@+id/edit_text_instructions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_text_border"
+                android:padding="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/label_instructions"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+
+            <TextView
+                android:id="@+id/label_visit_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/edit_text_instructions"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="16dp"
+                android:text="Horários das visitas"
+                android:textColor="@color/label_text"
+                />
+
+            <EditText
+                android:id="@+id/edit_text_visit_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_text_border"
+                android:padding="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/label_visit_time"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+
+            <Switch
+                android:id="@+id/switch_weekends_on"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Atende fim de semana"
+                app:layout_constraintTop_toBottomOf="@+id/edit_text_visit_time"
+                app:layout_constraintStart_toStartOf="parent"
+
+                />
+
+            <Button
+                android:id="@+id/button_next"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/switch_weekends_on"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="Próximo"
+                android:backgroundTint="@color/blue"
+                android:background="@drawable/button_default"
+                android:height="60dp"
+                android:layout_marginTop="40dp"
+                />
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

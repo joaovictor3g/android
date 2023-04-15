@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "82696240037",
+    "project_id": "happy-mobile-dec2f",
+    "storage_bucket": "happy-mobile-dec2f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:82696240037:android:e0e21fc629bc2314c1064c",
+        "android_client_info": {
+          "package_name": "com.example.happy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "82696240037-tk0v9rhjbjpvggbjuvm94geb9s67ov1v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCewLPUrA-fUPoWtZ_L8mIR-qx-PpwZuVQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "82696240037-tk0v9rhjbjpvggbjuvm94geb9s67ov1v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
