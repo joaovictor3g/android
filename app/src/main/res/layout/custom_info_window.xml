@@ -7,27 +7,33 @@
     android:focusable="true">
 
 
-    <TextView
-        android:id="@+id/orphanage_name"
+    <RelativeLayout
+        android:id="@+id/relative_box"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Orf. Esperança"
-        android:paddingVertical="20dp"
-        android:paddingHorizontal="16dp"
-        android:textSize="32dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent">
+        <TextView
+            android:id="@+id/orphanage_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Orf. Esperança"
+            android:paddingVertical="20dp"
+            android:paddingHorizontal="16dp"
+            android:textSize="32dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
-    <Button
-        android:id="@+id/info_window_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Ver mais detalhes"
-        android:paddingHorizontal="16dp"
-        android:translationZ="1dp"
-        android:clickable="true"
-        android:focusable="true"
-
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/orphanage_name"/>
+        <Button
+            android:id="@+id/info_window_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ver mais detalhes"
+            android:paddingHorizontal="16dp"
+            android:translationZ="1dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/orphanage_name"/>
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

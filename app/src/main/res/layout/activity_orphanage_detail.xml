@@ -4,6 +4,123 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:id="@+id/orphanage_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Orf. Esperança"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:textColor="@color/label_text"
+                android:textSize="24dp"
+                android:lineHeight="34px"
+                android:textFontWeight="@integer/material_motion_duration_short_2"
+                android:padding="16dp"
+                />
+
+            <TextView
+                android:id="@+id/orphanage_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Presta assistência a crianças de 06 a 15 anos que se encontre em situação de risco e/ou vulnerabilidade social."
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/orphanage_name"
+                android:paddingHorizontal="16dp"
+                />
+
+            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_marginHorizontal="16dp"
+                android:layout_height="200dp"
+                android:id="@+id/map"
+                android:layout_marginTop="32dp"
+                tools:context=".OrphanageDetailActivity"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/orphanage_description"/>
+
+
+            <TextView
+                android:id="@+id/heading_visitation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/heading"
+                android:layout_marginTop="50dp"
+                android:textSize="24dp"
+                android:lineHeight="34px"
+                android:textFontWeight="@integer/material_motion_duration_short_2"
+                app:layout_constraintTop_toBottomOf="@+id/map"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="Instruções para visitação"
+                android:padding="16dp"
+                />
+
+            <TextView
+                android:id="@+id/visit_instrutions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Venha como se sentir a vontade e traga muito amor e paciência para dar."
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/heading_visitation"
+                android:paddingHorizontal="16dp"
+                />
+
+            <TextView
+                android:id="@+id/visit_time_box"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Atendemos de Segunda a Sexta"
+                android:drawableTop="@drawable/clock"
+                android:background="@drawable/blue_gradient"
+                android:textAlignment="center"
+                android:padding="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/visit_instrutions"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="10dp"
+                />
+
+            <TextView
+                android:id="@+id/visit_weekend_open_box"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Atendemos fim de semana"
+                android:drawableTop="@drawable/group_13"
+                android:background="@drawable/green_gradient"
+                android:textAlignment="center"
+                android:padding="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/visit_instrutions"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="10dp"
+                />
+
+            <Button
+                android:id="@+id/whatsapp_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@string/whatsapp_button"
+                android:backgroundTint="@color/green_whatsapp"
+                android:height="70dp"
+                android:background="@drawable/button_default"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="10dp"
+                />
+        </LinearLayout>
+    </ScrollView>
 <!--    <ImageView-->
 <!--        android:id="@+id/orphanage_image"-->
 <!--        android:layout_width="0dp"-->
@@ -16,113 +133,6 @@
 <!--        android:clipToOutline="true"-->
 <!--        />-->
 
-    <TextView
-        android:id="@+id/orphanage_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Orf. Esperança"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textColor="@color/label_text"
-        android:textSize="24dp"
-        android:lineHeight="34px"
-        android:textFontWeight="@integer/material_motion_duration_short_2"
-        android:padding="16dp"
-        />
 
-    <TextView
-        android:id="@+id/orphanage_description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Presta assistência a crianças de 06 a 15 anos que se encontre em situação de risco e/ou vulnerabilidade social."
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/orphanage_name"
-        android:paddingHorizontal="16dp"
-        />
-
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_marginHorizontal="16dp"
-        android:layout_height="200dp"
-        android:id="@+id/map"
-        android:layout_marginTop="32dp"
-        tools:context=".OrphanageDetailActivity"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/orphanage_description"/>
-
-
-    <TextView
-        android:id="@+id/heading_visitation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/heading"
-        android:layout_marginTop="50dp"
-        android:textSize="24dp"
-        android:lineHeight="34px"
-        android:textFontWeight="@integer/material_motion_duration_short_2"
-        app:layout_constraintTop_toBottomOf="@+id/map"
-        app:layout_constraintStart_toStartOf="parent"
-        android:text="Instruções para visitação"
-        android:padding="16dp"
-        />
-
-    <TextView
-        android:id="@+id/visit_instrutions"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Venha como se sentir a vontade e traga muito amor e paciência para dar."
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/heading_visitation"
-        android:paddingHorizontal="16dp"
-        />
-
-    <TextView
-        android:id="@+id/visit_time_box"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Atendemos de Segunda a Sexta"
-        android:drawableTop="@drawable/clock"
-        android:background="@drawable/blue_gradient"
-        android:height="140dp"
-        android:maxWidth="160dp"
-        android:textAlignment="center"
-        android:padding="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/visit_instrutions"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="10dp"
-        />
-
-    <TextView
-        android:id="@+id/visit_weekend_open_box"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Atendemos fim de semana"
-        android:drawableTop="@drawable/group_13"
-        android:background="@drawable/green_gradient"
-        android:height="140dp"
-        android:maxWidth="160dp"
-        android:textAlignment="center"
-        android:padding="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/visit_instrutions"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="10dp"
-        />
-
-    <Button
-        android:id="@+id/whatsapp_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:text="@string/whatsapp_button"
-        android:backgroundTint="@color/green_whatsapp"
-        android:height="70dp"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="10dp"
-        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

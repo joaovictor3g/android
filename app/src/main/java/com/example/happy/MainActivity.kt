@@ -76,6 +76,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        val currentUser = auth.currentUser;
+
+        if(currentUser != null) {
+            openMain()
+        }
+    }
+
     private fun openMain() {
         val intent = Intent(this, MapsActivity::class.java)
         startActivity(intent)

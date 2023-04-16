@@ -20,10 +20,14 @@ import com.google.firebase.database.*
 
 class OrphanageDetailActivity: AppCompatActivity(), OnMapReadyCallback {
     private lateinit var googleMap: GoogleMap
+    var orphanageId: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
         setContentView(R.layout.activity_orphanage_detail)
+
+        orphanageId = intent.getStringExtra("orphanage_id")
+
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -32,9 +36,9 @@ class OrphanageDetailActivity: AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(map: GoogleMap) {
         this.googleMap = map
         val zoomlevel = 15f
-
+        Log.i("Orphanage id", orphanageId!!)
         val orphanageRef = FirebaseDatabase.getInstance().getReference("orphanages")
-            .child("9da90a6d-0e5f-4c28-b053-61e139f1add8")
+            .child(orphanageId ?: "")
         orphanageRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val orphanage = snapshot.getValue(CreateOrphanageActivity.Orphanage::class.java)
