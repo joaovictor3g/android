@@ -56,7 +56,6 @@ class OrphanageDetailActivity: AppCompatActivity(), OnMapReadyCallback {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
             }
         })
     }
@@ -72,6 +71,9 @@ class OrphanageDetailActivity: AppCompatActivity(), OnMapReadyCallback {
 
         val orphanageVisitInstructionsTextView = findViewById<TextView>(R.id.visit_instrutions)
         orphanageVisitInstructionsTextView.text = orphanage.visit?.instructions
+
+        val orphanageVisitTimeBoxTextView = findViewById<TextView>(R.id.visit_time_box)
+        orphanageVisitTimeBoxTextView.text = orphanage.visit?.time
     }
 
     private fun bitmapDescriptorFromVector(context: Context, vectorResId: Int): BitmapDescriptor? {

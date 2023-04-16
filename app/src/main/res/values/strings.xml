@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">happy</string>
     <string name="whatsapp_button">Entrar em contato via whatsapp</string>
+    <string name="logout">Logout</string>
 </resources>

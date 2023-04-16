@@ -7,6 +7,8 @@ import android.graphics.Canvas
 import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
@@ -23,6 +25,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
 
@@ -36,7 +39,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
-        supportActionBar?.hide()
+//        supportActionBar?.hide()
+        supportActionBar?.setTitle("Orfanatos")
         locationManager = getSystemService(LOCATION_SERVICE) as LocationManager?
 
         val mapFragment = supportFragmentManager
@@ -83,40 +87,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             startActivity(intent)
             true
         }
-
-//        mMap.setInfoWindowAdapter (object: GoogleMap.InfoWindowAdapter {
-//            override fun getInfoWindow(marker: Marker): View? {
-//                return null
-//            }
-//
-//            override fun getInfoContents(marker: Marker): View {
-//                val view = layoutInflater.inflate(R.layout.custom_info_window, null)
-//                val orphanageName = view.findViewById<TextView>(R.id.orphanage_name)
-//                val title = marker.title.toString().split("-")
-//                orphanageName.text = title[0]
-////
-////                val button = findViewById<Button>(R.id.info_window_button)
-////                button?.bringToFront()
-////                button?.isFocusable = true
-////                button?.isFocusableInTouchMode = true
-////                button?.requestFocus()
-////                button?.isActivated = true
-////                button?.setOnClickListener {
-////                    val intent = Intent(baseContext, OrphanageDetailActivity::class.java)
-////                    intent.putExtra("orphanage_id", title[1])
-////                    startActivity(intent)
-////                }
-//
-//
-//                view.setOnClickListener {
-//                    val intent = Intent(baseContext, OrphanageDetailActivity::class.java)
-//                    intent.putExtra("orphanage_id", title[1])
-//                    startActivity(intent)
-//                }
-//
-//                return view
-//            }
-//        })
     }
 
     private fun bitmapDescriptorFromVector(context: Context, vectorResId: Int): BitmapDescriptor? {
@@ -145,9 +115,35 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
+    private fun logout() {
+        FirebaseAuth.getInstance().signOut()
+    }
+
     private fun setAmountFoundOrphanages(amount: Int) {
         val amountOrphanages = findViewById<TextView>(R.id.amount_orphanages_found)
         amountOrphanages.text = "${amount} orfanatos encontrados"
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return true;
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_logout -> {
+                logout()
+                goToLogin()
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun goToLogin() {
+        val intent = Intent(baseContext, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
 }
