@@ -60,9 +60,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         database = FirebaseDatabase.getInstance().getReference("orphanages")
         database.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val orphanagesList = mutableListOf<CreateOrphanageActivity.Orphanage>()
+                val orphanagesList = mutableListOf<Orphanage>()
                 for (child in snapshot.children) {
-                    val orphanage = child.getValue(CreateOrphanageActivity.Orphanage::class.java)!!
+                    val orphanage = child.getValue(Orphanage::class.java)!!
 
                     mMap.addMarker(
                         MarkerOptions()

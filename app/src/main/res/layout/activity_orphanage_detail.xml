@@ -14,19 +14,19 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             >
-            <TextView
-                android:id="@+id/orphanage_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Orf. Esperança"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:textColor="@color/label_text"
-                android:textSize="24dp"
-                android:lineHeight="34px"
-                android:textFontWeight="@integer/material_motion_duration_short_2"
-                android:padding="16dp"
-                />
+<!--            <TextView-->
+<!--                android:id="@+id/orphanage_name"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Orf. Esperança"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                android:textColor="@color/label_text"-->
+<!--                android:textSize="24dp"-->
+<!--                android:lineHeight="34px"-->
+<!--                android:textFontWeight="@integer/material_motion_duration_short_2"-->
+<!--                android:padding="16dp"-->
+<!--                />-->
 
             <TextView
                 android:id="@+id/orphanage_description"
@@ -34,8 +34,9 @@
                 android:layout_height="wrap_content"
                 android:text="Presta assistência a crianças de 06 a 15 anos que se encontre em situação de risco e/ou vulnerabilidade social."
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/orphanage_name"
+                app:layout_constraintTop_toTopOf="parent"
                 android:paddingHorizontal="16dp"
+                android:layout_marginTop="16dp"
                 />
 
             <fragment xmlns:android="http://schemas.android.com/apk/res/android"

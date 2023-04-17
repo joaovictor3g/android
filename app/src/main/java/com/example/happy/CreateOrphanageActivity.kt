@@ -2,6 +2,7 @@ package com.example.happy
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Switch
@@ -9,12 +10,14 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.FirebaseException
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import java.util.UUID
 
 class CreateOrphanageActivity: AppCompatActivity() {
     private lateinit var database: DatabaseReference
+    private lateinit var auth: FirebaseAuth
     var latitude: Double? = 0.0
     var longitude: Double? = 0.0
 
@@ -24,6 +27,7 @@ class CreateOrphanageActivity: AppCompatActivity() {
         setContentView(R.layout.activity_new_orphanage)
 
         database = FirebaseDatabase.getInstance().reference
+        auth = FirebaseAuth.getInstance()
 
         latitude = intent.getDoubleExtra("latitude", 0.0)
         longitude = intent.getDoubleExtra("longitude", 0.0)
@@ -44,10 +48,14 @@ class CreateOrphanageActivity: AppCompatActivity() {
         val visitTime: EditText = findViewById(R.id.edit_text_visit_time)
         val weekendsOn: Switch = findViewById(R.id.switch_weekends_on)
 
-        val coords = Coords(latitude, longitude)
-        val visit = Visit(visitInstructions.text.toString(), visitTime.text.toString())
+        val coords = Orphanage.Coords(latitude, longitude)
+        val visit = Orphanage.Visit(visitInstructions.text.toString(), visitTime.text.toString())
         val id = UUID.randomUUID().toString()
         val isOpenOnWeekends = weekendsOn.isChecked
+
+        val email = auth.currentUser?.email!!
+        val user = User(email)
+        Log.i("user", user.toString())
 
         val orphanage = Orphanage(
             id,
@@ -55,7 +63,8 @@ class CreateOrphanageActivity: AppCompatActivity() {
             about.text.toString(),
             whatsapp.text.toString(),
             visit, coords,
-            isOpenOnWeekends
+            user,
+            isOpenOnWeekends,
         )
 
         try {
@@ -75,18 +84,18 @@ class CreateOrphanageActivity: AppCompatActivity() {
     }
 
 
-    data class Orphanage(
-        val id: String? = UUID.randomUUID().toString(),
-        val name: String? = "",
-        val about: String? = "",
-        val whatsapp: String? = "",
-        val visit: Visit? = Visit(),
-        val coords: Coords? = Coords(),
-        val weekendsOn: Boolean? = false
-        ) {
-    }
+//    data class Orphanage(
+//        val id: String? = UUID.randomUUID().toString(),
+//        val name: String? = "",
+//        val about: String? = "",
+//        val whatsapp: String? = "",
+//        val visit: Visit? = Visit(),
+//        val coords: Coords? = Coords(),
+//        @field:JvmField
+//        val weekendsOn: Boolean? = false,
+//        @field:JvmField
+//        val isFavorited: Boolean? = false
+//    ) {}
 
-    data class Visit(val instructions: String? = "", val time: String? = "") {}
 
-    data class Coords(val latitude: Double? = 0.0, val longitude: Double? = 0.0) {}
 }

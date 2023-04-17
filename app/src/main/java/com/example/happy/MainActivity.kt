@@ -3,6 +3,7 @@ package com.example.happy
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
@@ -16,11 +17,16 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import java.util.UUID
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var auth: FirebaseAuth
+    private lateinit var database: DatabaseReference
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         auth = FirebaseAuth.getInstance()
+        database = FirebaseDatabase.getInstance().reference
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken("82696240037-tk0v9rhjbjpvggbjuvm94geb9s67ov1v.apps.googleusercontent.com")
@@ -37,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
         val button: Button = findViewById(R.id.signin_button)
-            button.setOnClickListener {
+        button.setOnClickListener {
             signIn()
         }
     }
@@ -81,6 +88,11 @@ class MainActivity : AppCompatActivity() {
         val currentUser = auth.currentUser;
 
         if(currentUser != null) {
+            val email = currentUser.email!!
+            val name = currentUser.displayName!!
+            val user = User(email, name)
+            val getFirstPartOfEmail = email.split("@")[0]
+            database.child("users").child(getFirstPartOfEmail).setValue(user)
             openMain()
         }
     }
@@ -90,6 +102,5 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
     }
-
 }
 
