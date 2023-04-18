@@ -3,6 +3,7 @@ package com.example.happy
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -22,7 +23,6 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import java.util.UUID
 
 class OrphanageDetailActivity: AppCompatActivity(), OnMapReadyCallback {
     private lateinit var googleMap: GoogleMap
@@ -33,7 +33,6 @@ class OrphanageDetailActivity: AppCompatActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_orphanage_detail)
-
         orphanageId = intent.getStringExtra("orphanage_id")
         database = FirebaseDatabase.getInstance().reference
         auth = FirebaseAuth.getInstance()
@@ -84,6 +83,19 @@ class OrphanageDetailActivity: AppCompatActivity(), OnMapReadyCallback {
 
         val orphanageVisitTimeBoxTextView = findViewById<TextView>(R.id.visit_time_box)
         orphanageVisitTimeBoxTextView.text = orphanage.visit?.time
+
+        val orphanageWeeekendsOn = findViewById<TextView>(R.id.visit_weekend_open_box)
+        if (orphanage.weekendsOn == true) {
+            orphanageWeeekendsOn.text = "Atendemos aos fins de semana"
+            orphanageWeeekendsOn.background = ContextCompat.getDrawable(this, R.drawable.green_gradient)
+            orphanageWeeekendsOn.setTextColor(Color.BLACK)
+        } else {
+            orphanageWeeekendsOn.text = "Não atendemos aos fins de semana"
+            orphanageWeeekendsOn.background = ContextCompat.getDrawable(this, R.drawable.red_gradient)
+            orphanageWeeekendsOn.setTextColor(Color.RED)
+        }
+//        val drawableIcon = if (orphanage.weekendsOn == true) ContextCompat.getDrawable(this, R.drawable.group_13) else ContextCompat.getDrawable(this, R.drawable.clock)
+//        orphanageWeeekendsOn.setCompoundDrawables(null, drawableIcon, null, null)
     }
 
     private fun bitmapDescriptorFromVector(context: Context, vectorResId: Int): BitmapDescriptor? {
@@ -98,7 +110,7 @@ class OrphanageDetailActivity: AppCompatActivity(), OnMapReadyCallback {
     private fun setIcon(menuItem: MenuItem?, isFavorited: Boolean?) {
         if (menuItem == null) return
         menuItem.icon =
-            if (isFavorited == true) ContextCompat.getDrawable(this, R.drawable.favorite_filled)
+            if (isFavorited == true) ContextCompat.getDrawable(this, R.drawable.favorite_filled_red)
             else ContextCompat.getDrawable(this, R.drawable.favorite_outline)
     }
 
