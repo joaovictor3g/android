@@ -146,7 +146,6 @@ class OrphanageDetailActivity: AppCompatActivity(), OnMapReadyCallback {
 
                     }
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        Log.i("Orphanage id", orphanageId!!)
                         val orphanageUser = snapshot.child(orphanageId!!).getValue(OrphanageUser::class.java)
 
                         if(orphanageUser == null) toggleFavoriteOrphanage(true)
