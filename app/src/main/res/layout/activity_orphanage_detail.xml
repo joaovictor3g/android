@@ -121,9 +121,10 @@
                 android:text="@string/whatsapp_button"
                 android:backgroundTint="@color/green_whatsapp"
                 android:height="70dp"
-                android:background="@drawable/button_default"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginVertical="10dp"
+                android:drawableLeft="@drawable/whatsapp"
+                android:paddingHorizontal="10dp"
                 />
         </LinearLayout>
     </ScrollView>
