@@ -17,6 +17,7 @@
         <activity android:name=".OrphanageDetailActivity" />
         <activity android:name=".MapsActivity" />
         <activity android:name=".CreateOrphanageActivity" />
+        <activity android:name=".CommentActivity" />
         <activity
             android:name=".SplashScreen"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"

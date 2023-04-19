@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <ScrollView
+            android:id="@+id/comments_scrollview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:paddingTop="16dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:fillViewport="true">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
+                android:orientation="vertical"
+                >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Este é um comentario"
+                    android:background="@drawable/blue_gradient"
+                    android:padding="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="16sp"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Este é um comentario Este é um comentario Este é um comentario Este é um comentario Este é um comentario Este é um comentario Este é um comentario Este é um comentario"
+                    android:background="@drawable/blue_gradient"
+                    android:padding="10dp"
+                    android:textSize="16sp"
+                    />
+
+            </LinearLayout>
+        </ScrollView>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:gravity="center"
+
+                >
+                <EditText
+                    android:id="@+id/new_comment_edit_text"
+                    android:layout_width="wrap_content"
+                    android:inputType="text"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edit_text_border_outline"
+                    android:backgroundTint="#ffffff"
+                    android:textColor="@color/label_text"
+                    android:textFontWeight="@integer/material_motion_duration_long_2"
+                    android:textSize="20dp"
+                    android:layout_weight="1"
+                    android:paddingHorizontal="32dp"
+                    android:paddingVertical="16dp"
+                    android:hint="Digite um comentário aqui"
+                    android:autofillHints=""
+                    android:elevation="30dp"
+                    />
+
+                <Button
+                    android:id="@+id/add_new_comment_button"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    app:layout_constraintStart_toEndOf="@id/amount_orphanages_found"
+                    android:backgroundTint="@color/blue"
+                    android:layout_marginLeft="16dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_default"
+                    android:drawableTop="@drawable/send"
+                    android:paddingTop="14dp"
+                    />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

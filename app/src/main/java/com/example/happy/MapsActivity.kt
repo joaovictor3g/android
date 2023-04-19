@@ -66,7 +66,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
                     mMap.addMarker(
                         MarkerOptions()
-                            .position(LatLng(orphanage.coords?.latitude ?: 0.0 , orphanage.coords?.longitude ?: 0.0))
+                            .position(
+                                LatLng(
+                                    orphanage.coords?.latitude ?: 0.0 ,
+                                    orphanage.coords?.longitude ?: 0.0
+                                )
+                            )
                             .title(orphanage.id)
                             .icon(bitmapDescriptorFromVector(baseContext, R.drawable.happy_marker))
 

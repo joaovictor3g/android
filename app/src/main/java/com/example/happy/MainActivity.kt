@@ -98,7 +98,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openMain() {
-        val intent = Intent(this, MapsActivity::class.java)
+        val intent = Intent(this, CommentActivity::class.java)
         startActivity(intent)
         finish()
     }

@@ -55,7 +55,6 @@ class CreateOrphanageActivity: AppCompatActivity() {
 
         val email = auth.currentUser?.email!!
         val user = User(email)
-        Log.i("user", user.toString())
 
         val orphanage = Orphanage(
             id,
