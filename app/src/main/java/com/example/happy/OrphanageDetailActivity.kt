@@ -1,11 +1,11 @@
 package com.example.happy
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
@@ -115,7 +115,7 @@ class OrphanageDetailActivity: AppCompatActivity(), OnMapReadyCallback {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.favorite_menu, menu)
+        menuInflater.inflate(R.menu.orphanage_detail_menu, menu)
         val layotuButton = menu?.findItem(R.id.action_favorite)
 
         val userId = getUserId()
@@ -156,6 +156,12 @@ class OrphanageDetailActivity: AppCompatActivity(), OnMapReadyCallback {
                     }
                 })
 
+                return true
+            }
+            R.id.action_comments -> {
+                val intent = Intent(baseContext, CommentActivity::class.java)
+                intent.putExtra("orphanage_id", orphanageId)
+                startActivity(intent)
                 return true
             }
             else -> super.onOptionsItemSelected(item)

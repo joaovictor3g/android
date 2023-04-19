@@ -26,4 +26,10 @@ class Comment {
     }
 
     constructor() {}
+
+    override fun toString(): String {
+        return "Comment(id=$id, content='$content', createdAt=$createdAt, author=$author, orphanageId='$orphanageId')"
+    }
+
+
 }

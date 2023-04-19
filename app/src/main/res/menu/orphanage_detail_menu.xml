@@ -5,4 +5,9 @@
         android:title="@string/logout"
         android:icon="@drawable/favorite_outline"
         app:showAsAction="always" />
+
+    <item android:id="@+id/action_comments"
+        android:title="@string/ver_coment_rios"
+        android:icon="@drawable/comment"
+        app:showAsAction="always" />
 </menu>

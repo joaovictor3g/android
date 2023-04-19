@@ -16,30 +16,12 @@
             android:clipToPadding="false"
             android:fillViewport="true">
             <LinearLayout
+                android:id="@+id/comments_linear_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="16dp"
                 android:orientation="vertical"
-                >
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Este é um comentario"
-                    android:background="@drawable/blue_gradient"
-                    android:padding="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:textSize="16sp"
-                    />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Este é um comentario Este é um comentario Este é um comentario Este é um comentario Este é um comentario Este é um comentario Este é um comentario Este é um comentario"
-                    android:background="@drawable/blue_gradient"
-                    android:padding="10dp"
-                    android:textSize="16sp"
-                    />
-
-            </LinearLayout>
+                />
         </ScrollView>
         <RelativeLayout
             android:layout_width="match_parent"
@@ -66,7 +48,7 @@
                     android:layout_weight="1"
                     android:paddingHorizontal="32dp"
                     android:paddingVertical="16dp"
-                    android:hint="Digite um comentário aqui"
+                    android:hint="@string/digite_um_coment_rio_aqui"
                     android:autofillHints=""
                     android:elevation="30dp"
                     />

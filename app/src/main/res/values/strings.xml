@@ -2,4 +2,6 @@
     <string name="app_name">happy</string>
     <string name="whatsapp_button">Entrar em contato via whatsapp</string>
     <string name="logout">Logout</string>
+    <string name="ver_coment_rios">Ver comentários</string>
+    <string name="digite_um_coment_rio_aqui">Digite um comentário aqui</string>
 </resources>
