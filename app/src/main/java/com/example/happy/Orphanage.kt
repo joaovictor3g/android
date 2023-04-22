@@ -14,6 +14,7 @@ class Orphanage {
     @field:JvmField
     var isFavorited: Boolean? = false
     var createdBy: User = User()
+    var imageUrl: String? = ""
 
     constructor() {}
 
@@ -27,6 +28,7 @@ class Orphanage {
         createdBy: User,
         weekendsOn: Boolean? = false,
         isFavorited: Boolean? = false,
+        imageUrl: String? = ""
     ) {
         if(id == null) this.id = UUID.randomUUID().toString()
         else this.id = id
@@ -39,6 +41,7 @@ class Orphanage {
         this.createdBy = createdBy
         this.weekendsOn = weekendsOn
         this.isFavorited = isFavorited
+        this.imageUrl = imageUrl
     }
 
     data class Visit(val instructions: String? = "", val time: String? = "") {}

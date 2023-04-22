@@ -8,6 +8,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -41,6 +42,8 @@ class OrphanageDetailActivity: AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        sendMessage()
     }
 
     override fun onMapReady(map: GoogleMap) {
@@ -93,9 +96,8 @@ class OrphanageDetailActivity: AppCompatActivity(), OnMapReadyCallback {
             orphanageWeeekendsOn.text = "Não atendemos aos fins de semana"
             orphanageWeeekendsOn.background = ContextCompat.getDrawable(this, R.drawable.red_gradient)
             orphanageWeeekendsOn.setTextColor(Color.RED)
+            orphanageWeeekendsOn.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.info_red, 0, 0)
         }
-//        val drawableIcon = if (orphanage.weekendsOn == true) ContextCompat.getDrawable(this, R.drawable.group_13) else ContextCompat.getDrawable(this, R.drawable.clock)
-//        orphanageWeeekendsOn.setCompoundDrawables(null, drawableIcon, null, null)
     }
 
     private fun bitmapDescriptorFromVector(context: Context, vectorResId: Int): BitmapDescriptor? {
@@ -183,5 +185,24 @@ class OrphanageDetailActivity: AppCompatActivity(), OnMapReadyCallback {
     private fun getUserId(): String {
         val user = auth.currentUser ?: return ""
         return user?.email.toString().split("@")[0]
+    }
+
+    private fun sendMessage() {
+        val buttonSendWhatsapp = findViewById<Button>(R.id.whatsapp_button)
+        buttonSendWhatsapp.setOnClickListener {
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "text/plain"
+            intent.setPackage("com.whatsapp")
+            intent.putExtra(Intent.EXTRA_TEXT, "Teste")
+
+            if(intent.resolveActivity(packageManager) == null) {
+                Toast.makeText(this,
+                    "Por favor instale o whatsapp antes.",
+                    Toast.LENGTH_SHORT).show()
+
+            } else {
+                startActivity(intent)
+            }
+        }
     }
 }

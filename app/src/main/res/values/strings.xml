@@ -4,4 +4,6 @@
     <string name="logout">Logout</string>
     <string name="ver_coment_rios">Ver comentários</string>
     <string name="digite_um_coment_rio_aqui">Digite um comentário aqui</string>
+    <string name="maximo_300_caracteres">Máximo 300 caracteres</string>
+    <string name="about">Sobre</string>
 </resources>

@@ -68,6 +68,7 @@ class CommentActivity: AppCompatActivity() {
 
     private fun updateUI(comment: Comment?, layout: LinearLayout) {
         if(comment == null) return
+
         val textView = TextView(this)
         textView.text = comment.content
         textView.background = ContextCompat.getDrawable(this, R.drawable.blue_gradient)
