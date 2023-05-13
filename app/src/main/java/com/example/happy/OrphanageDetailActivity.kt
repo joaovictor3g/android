@@ -184,7 +184,7 @@ class OrphanageDetailActivity: AppCompatActivity(), OnMapReadyCallback {
 
     private fun getUserId(): String {
         val user = auth.currentUser ?: return ""
-        return user?.email.toString().split("@")[0]
+        return user.uid
     }
 
     private fun sendMessage() {

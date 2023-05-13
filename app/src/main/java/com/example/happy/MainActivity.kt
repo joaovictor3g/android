@@ -76,6 +76,7 @@ class MainActivity : AppCompatActivity() {
             task: Task<AuthResult> ->
                 if(task.isSuccessful) {
                     Toast.makeText(baseContext, "Autenticação efetuada com google", Toast.LENGTH_SHORT).show()
+                    createUserIfNotExists()
                     openMain()
                 } else {
                     Toast.makeText(baseContext, "Erro de autenticação com google", Toast.LENGTH_SHORT).show()
@@ -83,18 +84,36 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun createUserIfNotExists() {
+        val currentUser = auth.currentUser ?: return
+        val userId = currentUser.uid
+
+        val email = currentUser.email!!
+        val name = currentUser.displayName!!
+        val user = User(email, name)
+
+        val databaseUserIdRef = database
+            .child("users")
+            .child(userId)
+
+        databaseUserIdRef
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val snapshot = task.result
+
+                    if (!snapshot.exists()) {
+                        databaseUserIdRef.setValue(user)
+                    }
+
+                    openMain()
+                }
+            }
+    }
+
     override fun onStart() {
         super.onStart()
-        val currentUser = auth.currentUser;
-
-        if(currentUser != null) {
-            val email = currentUser.email!!
-            val name = currentUser.displayName!!
-            val user = User(email, name)
-            val getFirstPartOfEmail = email.split("@")[0]
-            database.child("users").child(getFirstPartOfEmail).setValue(user)
-            openMain()
-        }
+        createUserIfNotExists()
     }
 
     private fun openMain() {
