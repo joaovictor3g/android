@@ -11,22 +11,14 @@
         >
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             >
-<!--            <TextView-->
-<!--                android:id="@+id/orphanage_name"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="Orf. Esperança"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent"-->
-<!--                android:textColor="@color/label_text"-->
-<!--                android:textSize="24dp"-->
-<!--                android:lineHeight="34px"-->
-<!--                android:textFontWeight="@integer/material_motion_duration_short_2"-->
-<!--                android:padding="16dp"-->
-<!--                />-->
+            <ImageView
+                android:id="@+id/orphanage_image"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                />
 
             <TextView
                 android:id="@+id/orphanage_description"

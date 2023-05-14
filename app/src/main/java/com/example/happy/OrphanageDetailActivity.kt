@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -24,6 +25,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.squareup.picasso.Picasso
 
 class OrphanageDetailActivity: AppCompatActivity(), OnMapReadyCallback {
     private lateinit var googleMap: GoogleMap
@@ -77,6 +79,16 @@ class OrphanageDetailActivity: AppCompatActivity(), OnMapReadyCallback {
 
     private fun populateData(orphanage: Orphanage?) {
         if(orphanage == null) return
+
+        val orphangeImageView = findViewById<ImageView>(R.id.orphanage_image)
+
+        Picasso
+            .get()
+            .load(orphanage.imageUrl)
+            .fit()
+            .centerCrop()
+            .placeholder(R.drawable.image_default)
+            .into(orphangeImageView)
 
         val orphanageAboutTextView = findViewById<TextView>(R.id.orphanage_description)
         orphanageAboutTextView.text = orphanage.about

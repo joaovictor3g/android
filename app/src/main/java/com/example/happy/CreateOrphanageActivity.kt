@@ -34,6 +34,11 @@ class CreateOrphanageActivity: AppCompatActivity() {
     var latitude: Double? = 0.0
     var longitude: Double? = 0.0
 
+    private lateinit var imageView: ImageView
+    private var imageUri: Uri? = null
+    private lateinit var uploadButton: Button
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
@@ -48,44 +53,26 @@ class CreateOrphanageActivity: AppCompatActivity() {
 
         val buttonNext: Button = findViewById(R.id.button_next)
         buttonNext.setOnClickListener {
-            createNewOrphanage()
+            handleCreateOrphanage()
         }
         val coordsTextView: TextView = findViewById(R.id.coords_text_view)
         coordsTextView.text = "Você está com as seguintes coordenadas: lat:${latitude}, long${longitude}"
 
-        val imgPickerBtn = findViewById<Button>(R.id.img_pick_btn)
-        imgPickerBtn.setOnClickListener {
-            //check runtime permission
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-//                if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) ==
-//                    PackageManager.PERMISSION_DENIED){
-//                    //permission denied
-//                    val permissions = arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE)
-//                    //show popup to request runtime permission
-//                    requestPermissions(permissions, PERMISSION_CODE);
-//                }
-//                else{
-//                    //permission already granted
-//                    pickImageFromGallery()
-//                }
-//            }
-//            else{
-//                //system OS is < Marshmallow
-//                pickImageFromGallery()
-//            }
-//        }
-            pickImageFromGallery()
+        imageView = findViewById<ImageView>(R.id.image_view)
+        uploadButton = findViewById<Button>(R.id.img_pick_btn)
+        uploadButton.setOnClickListener {
+            val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+            startActivityForResult(gallery, IMAGE_PICK_CODE)
         }
     }
 
-    private fun createNewOrphanage() {
+    private fun createNewOrphanage(imageUrl: String) {
         val name: EditText = findViewById(R.id.edit_text_name)
         val about: EditText = findViewById(R.id.edit_text_about)
         val whatsapp: EditText = findViewById(R.id.edit_text_whatsapp)
         val visitInstructions: EditText = findViewById(R.id.edit_text_instructions)
         val visitTime: EditText = findViewById(R.id.edit_text_visit_time)
         val weekendsOn: Switch = findViewById(R.id.switch_weekends_on)
-        val image: ImageView = findViewById(R.id.image_view)
 
         val coords = Orphanage.Coords(latitude, longitude)
         val visit = Orphanage.Visit(visitInstructions.text.toString(), visitTime.text.toString())
@@ -104,20 +91,10 @@ class CreateOrphanageActivity: AppCompatActivity() {
             visit, coords,
             user,
             isOpenOnWeekends,
+            imageUrl = imageUrl
         )
 
         try {
-//            var profileImage = PreferenceManager.getDefaultSharedPreferences(this).getString(MediaStore.EXTRA_OUTPUT, null)
-//            val file = Uri.fromFile(File(Uri.parse(profileImage)))
-//            val uploadRef = storage.reference.child("images/${file.lastPathSegment}")
-//            val uploadTask = uploadRef.putFile(file)
-//
-//            uploadTask.addOnFailureListener {
-//                Log.i("Error to upload", it.toString())
-//            }.addOnSuccessListener {
-//                Log.i("Success to upload", it.toString())
-//            }
-
             database.child("orphanages").child(id).setValue(orphanage)
             Toast.makeText(this, "Orfanato criado com sucesso", Toast.LENGTH_SHORT).show()
             goToMap()
@@ -133,55 +110,38 @@ class CreateOrphanageActivity: AppCompatActivity() {
         finish()
     }
 
-
-    private fun pickImageFromGallery() {
-        //Intent to pick image
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
-        startActivityForResult(intent, IMAGE_PICK_CODE)
-    }
-
-    companion object {
-        //image pick code
-        private val IMAGE_PICK_CODE = 1000
-        //Permission code
-        private val PERMISSION_CODE = 1001
-    }
-
-    //handle requested permission result
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when(requestCode){
-            PERMISSION_CODE -> {
-                if (grantResults.isNotEmpty() && grantResults[0] ==
-                    PackageManager.PERMISSION_GRANTED){
-                    //permission from popup granted
-                    pickImageFromGallery()
-                }
-                else{
-                    //permission from popup denied
-                    Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-    }
-
-    //handle result of picked image
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
-            val imageView = findViewById<ImageView>(R.id.image_view)
-            imageView.setImageURI(data?.data)
+        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE) {
+            imageUri = data?.data
+            imageView.setImageURI(imageUri)
         }
     }
 
-    fun setupImage(imageView: ImageView): ByteArray {
-        imageView.isDrawingCacheEnabled = true
-        imageView.buildDrawingCache()
-        val bitmap = (imageView.drawable as BitmapDrawable).bitmap
+
+    private fun handleCreateOrphanage() {
+        val drawable = imageView.drawable as BitmapDrawable
+        val bitmap = drawable.bitmap
         val baos = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
         val data = baos.toByteArray()
-        return data
+
+        val timestamp = System.currentTimeMillis()
+        val imageName = "$timestamp.jpg"
+        val storageRef = storage.getReference(imageName)
+        val uploadTask = storageRef.putBytes(data)
+
+        uploadTask.addOnSuccessListener { taskSnapshot ->
+            taskSnapshot.storage.downloadUrl.addOnSuccessListener { uri ->
+                val imageUrl = uri.toString()
+                createNewOrphanage(imageUrl)
+            }
+        }.addOnFailureListener { exception ->
+            Toast.makeText(this, "Falha ao criar o orfanato", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    companion object {
+        private const val IMAGE_PICK_CODE = 100
     }
 }
