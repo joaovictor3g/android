@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -27,7 +28,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var database: DatabaseReference
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity() {
             .build()
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
+
 
         val button: Button = findViewById(R.id.signin_button)
         button.setOnClickListener {
@@ -77,7 +78,6 @@ class MainActivity : AppCompatActivity() {
                 if(task.isSuccessful) {
                     Toast.makeText(baseContext, "Autenticação efetuada com google", Toast.LENGTH_SHORT).show()
                     createUserIfNotExists()
-                    openMain()
                 } else {
                     Toast.makeText(baseContext, "Erro de autenticação com google", Toast.LENGTH_SHORT).show()
                 }
@@ -88,27 +88,52 @@ class MainActivity : AppCompatActivity() {
         val currentUser = auth.currentUser ?: return
         val userId = currentUser.uid
 
-        val email = currentUser.email!!
-        val name = currentUser.displayName!!
-        val user = User(email, name)
-
         val databaseUserIdRef = database
             .child("users")
             .child(userId)
 
-        databaseUserIdRef
-            .get()
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val snapshot = task.result
+           databaseUserIdRef
+               .child("role")
+               .get()
+               .addOnCompleteListener { task ->
+                   if (task.isSuccessful) {
+                       val snapshot = task.result
 
-                    if (!snapshot.exists()) {
-                        databaseUserIdRef.setValue(user)
-                    }
+                       if (snapshot.exists()) {
+                           val role = snapshot.getValue(String::class.java)
 
-                    openMain()
-                }
-            }
+                           if (role != "admin") {
+                               Toast.makeText(
+                                   this,
+                                   "Você não tem cadastro de administrador",
+                                   Toast.LENGTH_SHORT
+                               ).show()
+                               auth.signOut()
+                               googleSignInClient.signOut()
+                           } else {
+                               openMain()
+                           }
+                       } else {
+                           val email = currentUser.email!!
+                           val name = currentUser.displayName!!
+                           val user = User(email, name)
+
+                           databaseUserIdRef
+                               .get()
+                               .addOnCompleteListener { task ->
+                                   if (task.isSuccessful) {
+                                       val snapshot = task.result
+
+                                       if (!snapshot.exists()) {
+                                           databaseUserIdRef.setValue(user)
+                                       }
+
+                                       openMain()
+                                   }
+                               }
+                       }
+                   }
+               }
     }
 
     override fun onStart() {

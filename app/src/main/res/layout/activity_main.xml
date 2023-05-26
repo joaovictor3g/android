@@ -27,7 +27,7 @@
         android:backgroundTint="#ffff"
         android:drawableRight="@drawable/google_logo"
         android:paddingHorizontal="32dp"
-        android:text="Faça Login com o google"
+        android:text="@string/do_google_login"
         android:textColor="#000"
         tools:layout_editor_absoluteX="32dp"
         tools:layout_editor_absoluteY="632dp"

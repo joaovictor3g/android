@@ -37,6 +37,7 @@ class CreateOrphanageActivity: AppCompatActivity() {
     private lateinit var imageView: ImageView
     private var imageUri: Uri? = null
     private lateinit var uploadButton: Button
+    private lateinit var buttonSubmit: Button
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,8 +52,8 @@ class CreateOrphanageActivity: AppCompatActivity() {
         latitude = intent.getDoubleExtra("latitude", 0.0)
         longitude = intent.getDoubleExtra("longitude", 0.0)
 
-        val buttonNext: Button = findViewById(R.id.button_next)
-        buttonNext.setOnClickListener {
+        buttonSubmit = findViewById(R.id.button_next)
+        buttonSubmit.setOnClickListener {
             handleCreateOrphanage()
         }
         val coordsTextView: TextView = findViewById(R.id.coords_text_view)
@@ -118,8 +119,35 @@ class CreateOrphanageActivity: AppCompatActivity() {
         }
     }
 
+    private fun validateUser (): Boolean {
+        val currentUser = auth.currentUser
+        var hasAdminRole = false
+
+        if (currentUser != null) {
+            database
+                .child("users")
+                .child(currentUser.uid)
+                .child("role")
+                .get()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val snapshot = task.result
+
+                        if (snapshot.exists()) {
+                            val role = snapshot.getValue(String::class.java)
+                            if (role == "admin") hasAdminRole = true
+                        }
+                    }
+                }
+
+        }
+
+        return hasAdminRole
+    }
+
 
     private fun handleCreateOrphanage() {
+        buttonSubmit.text = "Aguarde..."
         val drawable = imageView.drawable as BitmapDrawable
         val bitmap = drawable.bitmap
         val baos = ByteArrayOutputStream()
@@ -139,6 +167,7 @@ class CreateOrphanageActivity: AppCompatActivity() {
         }.addOnFailureListener { exception ->
             Toast.makeText(this, "Falha ao criar o orfanato", Toast.LENGTH_SHORT).show()
         }
+
     }
 
     companion object {

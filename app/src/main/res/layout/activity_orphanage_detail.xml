@@ -87,6 +87,7 @@
                     android:background="@drawable/blue_gradient"
                     android:textAlignment="center"
                     android:padding="16dp"
+                    android:layout_weight="0"
                     />
 
                 <TextView
@@ -101,6 +102,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="parent"
                     android:layout_marginLeft="16dp"
+                    android:layout_weight="1"
+
                     />
             </LinearLayout>
 
@@ -120,17 +123,7 @@
                 />
         </LinearLayout>
     </ScrollView>
-<!--    <ImageView-->
-<!--        android:id="@+id/orphanage_image"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        android:scaleType="fitXY"-->
-<!--        android:src="@drawable/orphanage_image"-->
-<!--        android:clipToOutline="true"-->
-<!--        />-->
+
 
 
 

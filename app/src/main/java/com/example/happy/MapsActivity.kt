@@ -7,11 +7,17 @@ import android.graphics.Canvas
 import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Display
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -29,19 +35,29 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
     private var locationManager : LocationManager? = null
     private lateinit var database: DatabaseReference
-
+    private lateinit var googleSignInClient: GoogleSignInClient
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
-//        supportActionBar?.hide()
         supportActionBar?.setTitle("Orfanatos")
         locationManager = getSystemService(LOCATION_SERVICE) as LocationManager?
+
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken("82696240037-tk0v9rhjbjpvggbjuvm94geb9s67ov1v.apps.googleusercontent.com")
+            .requestEmail()
+            .build()
+
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
+        auth = FirebaseAuth.getInstance()
+        database = FirebaseDatabase.getInstance().reference
 
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         handleGoToAddNewOrphanage()
+        toggleShowButtonByRole()
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -52,8 +68,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(quixada, zoomlevel))
 
-        database = FirebaseDatabase.getInstance().getReference("orphanages")
-        database.addValueEventListener(object : ValueEventListener {
+        database.child("orphanages").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val orphanagesList = mutableListOf<Orphanage>()
                 for (child in snapshot.children) {
@@ -117,6 +132,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun logout() {
         FirebaseAuth.getInstance().signOut()
+        googleSignInClient.signOut()
     }
 
     private fun setAmountFoundOrphanages(amount: Int) {
@@ -139,6 +155,32 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
+    private fun toggleShowButtonByRole() {
+        val currentUser = auth.currentUser ?: return
+        val button = findViewById<Button>(R.id.add_new_orphanage_button)
+        database
+            .child("users")
+            .child(currentUser.uid)
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val snapshot = task.result
+
+                    if (snapshot.exists()) {
+                        val role = snapshot.child("role").getValue(String::class.java)
+                        if (role == "admin") button.visibility = View.VISIBLE
+                        else {
+                            val orphanageAmountTextView = findViewById<TextView>(R.id.amount_orphanages_found)
+                            orphanageAmountTextView.layoutParams.width = LinearLayout.LayoutParams.MATCH_PARENT
+                            button.visibility = View.GONE
+                        }
+                    }
+                }
+            }
+
+    }
+
 
     private fun goToLogin() {
         val intent = Intent(baseContext, MainActivity::class.java)
