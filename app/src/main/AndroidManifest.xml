@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <permission android:name="com.yourdomain.projname.permission.MAPS_RECEIVE"
+
+    <permission
+        android:name="com.yourdomain.projname.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="18" />
+
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18" />
 
     <application
         android:allowBackup="true"
@@ -14,6 +19,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Happy"
         tools:targetApi="31">
+        <activity
+            android:name=".SecondTutorial"
+            android:exported="false" />
+        <activity
+            android:name=".FirstTutorial"
+            android:exported="false"
+            android:label="@string/title_activity_first_tutorial"
+            android:theme="@style/Theme.Happy.NoActionBar" />
         <activity android:name=".MainActivity" />
         <activity android:name=".OrphanageDetailActivity" />
         <activity android:name=".MapsActivity" />
@@ -21,18 +34,18 @@
         <activity android:name=".CommentActivity" />
         <activity
             android:name=".SplashScreen"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="${GOOGLE_MAPS_API_KEY}"/>
-
+            android:value="${GOOGLE_MAPS_API_KEY}" />
     </application>
 
 </manifest>
