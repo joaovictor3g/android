@@ -100,19 +100,7 @@ class MainActivity : AppCompatActivity() {
                        val snapshot = task.result
 
                        if (snapshot.exists()) {
-                           val role = snapshot.getValue(String::class.java)
-
-                           if (role != "admin") {
-                               Toast.makeText(
-                                   this,
-                                   "Você não tem cadastro de administrador",
-                                   Toast.LENGTH_SHORT
-                               ).show()
-                               auth.signOut()
-                               googleSignInClient.signOut()
-                           } else {
-                               openMain()
-                           }
+                           openMain()
                        } else {
                            val email = currentUser.email!!
                            val name = currentUser.displayName!!

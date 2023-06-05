@@ -8,6 +8,8 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -29,17 +31,18 @@ import com.squareup.picasso.Picasso
 
 class OrphanageDetailActivity: AppCompatActivity(), OnMapReadyCallback {
     private lateinit var googleMap: GoogleMap
-    var orphanageId: String? = null
+    private lateinit var orphanageId: String
     private lateinit var database: DatabaseReference
     private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_orphanage_detail)
-        orphanageId = intent.getStringExtra("orphanage_id")
+
+        orphanageId = intent.getStringExtra("orphanage_id").toString()
+
         database = FirebaseDatabase.getInstance().reference
         auth = FirebaseAuth.getInstance()
-
 
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
@@ -75,6 +78,30 @@ class OrphanageDetailActivity: AppCompatActivity(), OnMapReadyCallback {
             override fun onCancelled(error: DatabaseError) {
             }
         })
+    }
+
+    private fun toggleViewOfUpdateAndDeleteActions(menu: Menu?) {
+        val currentUser = auth.currentUser ?: return
+
+        database
+            .child("users")
+            .child(currentUser.uid)
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val snapshot = task.result
+
+                    if (snapshot.exists()) {
+                        val role = snapshot.child("role").getValue(String::class.java)
+
+                        if (role == "personal") {
+                            menu?.removeItem(R.id.action_update)
+                            menu?.removeItem(R.id.action_delete)
+                        }
+                    }
+                }
+            }
+
     }
 
     private fun populateData(orphanage: Orphanage?) {
@@ -145,6 +172,9 @@ class OrphanageDetailActivity: AppCompatActivity(), OnMapReadyCallback {
             override fun onCancelled(error: DatabaseError) {
             }
         })
+
+        toggleViewOfUpdateAndDeleteActions(menu)
+
         return true;
     }
 
@@ -178,8 +208,32 @@ class OrphanageDetailActivity: AppCompatActivity(), OnMapReadyCallback {
                 startActivity(intent)
                 return true
             }
+
+            R.id.action_update -> {
+                val intent = Intent(baseContext, UpdateOrphanageActivity::class.java)
+                intent.putExtra("orphanage_id", orphanageId)
+                startActivity(intent)
+                return true
+            }
+
+            R.id.action_delete -> {
+                handleDeleteOrphanage()
+                val intent = Intent(baseContext, MapsActivity::class.java)
+                startActivity(intent)
+                return true
+            }
+
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun handleDeleteOrphanage() {
+        database
+            .child("orphanages")
+            .child(orphanageId)
+            .setValue(null)
+
+        Toast.makeText(this, "Orfanato deletado com sucesso", Toast.LENGTH_SHORT).show()
     }
 
     private fun toggleFavoriteOrphanage(isFavorited: Boolean?) {

@@ -21,4 +21,6 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="bring_happy">Leve felicidade para o mundo</string>
     <string name="pick_orphanage">Escolha um orfanato no mapa e faça uma visita</string>
+    <string name="update">Atualizar</string>
+    <string name="delete">Deletar</string>
 </resources>

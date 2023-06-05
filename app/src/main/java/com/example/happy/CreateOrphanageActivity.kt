@@ -83,7 +83,6 @@ class CreateOrphanageActivity: AppCompatActivity() {
         val email = auth.currentUser?.email!!
         val user = User(email)
 
-
         val orphanage = Orphanage(
             id,
             name.text.toString(),

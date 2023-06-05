@@ -20,6 +20,9 @@
         android:theme="@style/Theme.Happy"
         tools:targetApi="31">
         <activity
+            android:name=".UpdateOrphanageActivity"
+            android:exported="false" />
+        <activity
             android:name=".SecondTutorial"
             android:exported="false" />
         <activity
