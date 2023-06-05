@@ -152,6 +152,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 goToLogin()
                 return true
             }
+
+            R.id.action_navigate_favorites -> {
+                val intent = Intent(this, SeeFavoritesOrphanages::class.java)
+                startActivity(intent)
+                return true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

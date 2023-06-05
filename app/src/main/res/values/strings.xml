@@ -23,4 +23,5 @@
     <string name="pick_orphanage">Escolha um orfanato no mapa e faça uma visita</string>
     <string name="update">Atualizar</string>
     <string name="delete">Deletar</string>
+    <string name="see_favorites">Ver orfanatos favoritos</string>
 </resources>

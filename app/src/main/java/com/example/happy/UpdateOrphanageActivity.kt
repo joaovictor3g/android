@@ -52,6 +52,9 @@ class UpdateOrphanageActivity : AppCompatActivity() {
         buttonSubmit = findViewById(R.id.button_next)
         buttonSubmit.setOnClickListener {
             handleCreateOrphanage()
+            val intent = Intent(this, OrphanageDetailActivity::class.java)
+            intent.putExtra("orphanage_id", orphanageId)
+            startActivity(intent)
         }
 
         updateInterface()
