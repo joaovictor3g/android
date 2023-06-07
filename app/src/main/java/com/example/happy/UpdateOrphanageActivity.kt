@@ -55,6 +55,7 @@ class UpdateOrphanageActivity : AppCompatActivity() {
             val intent = Intent(this, OrphanageDetailActivity::class.java)
             intent.putExtra("orphanage_id", orphanageId)
             startActivity(intent)
+            finish()
         }
 
         updateInterface()

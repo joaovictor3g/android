@@ -92,7 +92,7 @@ class MainActivity : AppCompatActivity() {
             .child("users")
             .child(userId)
 
-           databaseUserIdRef
+        databaseUserIdRef
                .child("role")
                .get()
                .addOnCompleteListener { task ->
